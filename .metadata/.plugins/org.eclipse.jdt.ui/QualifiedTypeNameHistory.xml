@@ -34,4 +34,6 @@
 <fullyQualifiedTypeName name="com.hp.hpl.jena.query.Query"/>
 <fullyQualifiedTypeName name="arq.qexpr"/>
 <fullyQualifiedTypeName name="com.hp.hpl.jena.query.ResultSet"/>
+<fullyQualifiedTypeName name="org.apache.lucene.document.Fieldable"/>
+<fullyQualifiedTypeName name="org.apache.lucene.document.Field"/>
 </qualifiedTypeNameHistroy>
