@@ -1,0 +1,26 @@
+package de.test.qparser;
+
+import org.apache.solr.common.params.SolrParams;
+import org.apache.solr.common.util.NamedList;
+import org.apache.solr.request.SolrQueryRequest;
+import org.apache.solr.search.QParser;
+import org.apache.solr.search.QParserPlugin;
+
+public class QueryParserTest extends QParserPlugin{
+
+	@Override
+	public void init(NamedList arg0) {
+		System.out.println("bla init");
+		
+	}
+
+	@Override
+	public QParser createParser(String arg0, SolrParams arg1, SolrParams arg2,
+			SolrQueryRequest arg3) {
+		System.out.println("blaaaaaaaaaaaaaaa--------------------");
+		System.out.println("test "+arg0);
+		
+		return null;
+	}
+
+}

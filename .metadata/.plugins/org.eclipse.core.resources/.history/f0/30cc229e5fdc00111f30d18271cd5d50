@@ -1,0 +1,107 @@
+package de.test.qparser;
+
+import java.util.List;
+
+import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.Sort;
+import org.apache.solr.common.params.CommonParams;
+import org.apache.solr.common.params.SolrParams;
+import org.apache.solr.common.util.NamedList;
+import org.apache.solr.common.util.StrUtils;
+import org.apache.solr.request.SolrQueryRequest;
+import org.apache.solr.search.QParser;
+
+import org.apache.solr.search.LuceneQParser;
+import org.apache.solr.search.QParserPlugin;
+import org.apache.solr.search.FunctionQParserPlugin;
+import org.apache.solr.search.QueryParsing;
+import org.apache.solr.search.SolrQueryParser;
+import org.apache.solr.search.SortSpec;
+
+
+public class QueryParserTest extends QParserPlugin{
+
+	@Override
+	public void init(NamedList arg0) {
+		
+	}
+
+	@Override
+	public QParser createParser(String str, SolrParams params1, SolrParams params2,
+			SolrQueryRequest request) {
+		return new TestParser(str, params1, params2, request);
+	}
+
+}
+
+class TestParser extends QParser{
+	
+	SolrQueryParser lparser;
+
+	public TestParser(String qstr, SolrParams localParams, SolrParams params,
+			SolrQueryRequest req) {
+		super(qstr, localParams, params, req);
+	}
+
+	@Override
+	public Query parse() throws ParseException {
+		String qstr= super.getString();
+		
+		if(qstr == null ){
+			return null;
+		}
+		
+		lparser = new SolrQueryParser(this, getReq().getSchema().getDefaultSearchFieldName());
+		Query q = lparser.parse(qstr);		
+		return q;
+	}
+	
+}
+
+
+/*class LuceneQParser extends QParser {
+  SolrQueryParser lparser;
+
+  public LuceneQParser(String qstr, SolrParams localParams, SolrParams params, SolrQueryRequest req) {
+    super(qstr, localParams, params, req);
+  }
+
+
+  @Override
+  public Query parse() throws ParseException {
+    String qstr = getString();
+    if (qstr == null || qstr.length()==0) return null;
+
+    String defaultField = getParam(CommonParams.DF);
+    if (defaultField==null) {
+      defaultField = getReq().getSchema().getDefaultSearchFieldName();
+    }
+    lparser = new SolrQueryParser(this, defaultField);
+
+    // these could either be checked & set here, or in the SolrQueryParser constructor
+    String opParam = getParam(QueryParsing.OP);
+    if (opParam != null) {
+      lparser.setDefaultOperator("AND".equals(opParam) ? QueryParser.Operator.AND : QueryParser.Operator.OR);
+    } else {
+      // try to get default operator from schema
+      QueryParser.Operator operator = getReq().getSchema().getSolrQueryParser(null).getDefaultOperator();
+      lparser.setDefaultOperator(null == operator ? QueryParser.Operator.OR : operator);
+    }
+
+    return lparser.parse(qstr);
+  }
+
+
+  @Override
+  public String[] getDefaultHighlightFields() {
+    return lparser == null ? new String[]{} : new String[]{lparser.getField()};
+  }
+  
+}
+
+
+
+
+}*/

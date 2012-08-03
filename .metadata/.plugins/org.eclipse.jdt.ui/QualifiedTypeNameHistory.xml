@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="org.apache.solr.search.QParserPlugin"/>
+<fullyQualifiedTypeName name="org.apache.solr.search.QParser"/>
+<fullyQualifiedTypeName name="org.apache.lucene.queryParser.ParseException"/>
+<fullyQualifiedTypeName name="de.test.qparser.TestParser"/>
+<fullyQualifiedTypeName name="org.apache.solr.search.SolrQueryParser"/>
+<fullyQualifiedTypeName name="org.apache.lucene.search.Query"/>
+<fullyQualifiedTypeName name="org.apache.solr.common.params.CommonParams"/>
+<fullyQualifiedTypeName name="org.apache.solr.response.TextResponseWriter"/>
+<fullyQualifiedTypeName name="de.test.respWriter.OwnWriter"/>
+<fullyQualifiedTypeName name="com.hp.hpl.jena.query.Dataset"/>
+<fullyQualifiedTypeName name="com.hp.hpl.jena.rdf.model.Property"/>
+<fullyQualifiedTypeName name="com.hp.hpl.jena.tdb.TDBFactory"/>
+<fullyQualifiedTypeName name="com.hp.hpl.jena.rdf.model.Model"/>
+<fullyQualifiedTypeName name="com.hp.hpl.jena.rdf.model.StmtIterator"/>
+<fullyQualifiedTypeName name="com.hp.hpl.jena.rdf.model.Statement"/>
+<fullyQualifiedTypeName name="com.hp.hpl.jena.rdf.model.Resource"/>
+<fullyQualifiedTypeName name="java.io.Writer"/>
+<fullyQualifiedTypeName name="org.openjena.atlas.io.IndentedWriter"/>
+<fullyQualifiedTypeName name="com.hp.hpl.jena.sparql.resultset.JSONOutputResultSet"/>
+<fullyQualifiedTypeName name="com.hp.hpl.jena.sparql.resultset.JSONOutput"/>
+<fullyQualifiedTypeName name="java.io.OutputStream"/>
+<fullyQualifiedTypeName name="com.hp.hpl.jena.query.QueryExecutionFactory"/>
+<fullyQualifiedTypeName name="com.hp.hpl.jena.query.ResultSetFormatter"/>
+<fullyQualifiedTypeName name="org.apache.solr.common.params.SolrParams"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="org.apache.solr.common.util.NamedList"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="org.apache.solr.search.DocSlice"/>
+<fullyQualifiedTypeName name="org.apache.solr.search.DocIterator"/>
+<fullyQualifiedTypeName name="com.hp.hpl.jena.query.Query"/>
+<fullyQualifiedTypeName name="arq.qexpr"/>
+<fullyQualifiedTypeName name="com.hp.hpl.jena.query.ResultSet"/>
+</qualifiedTypeNameHistroy>

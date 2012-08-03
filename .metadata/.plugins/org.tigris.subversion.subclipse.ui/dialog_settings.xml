@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="362" key="passwordStores.size.y"/>
+	<item value="520" key="passwordStores.size.x"/>
+	<item value="299" key="passwordStores.location.y"/>
+	<item value="585" key="passwordStores.location.x"/>
+	<section name="NewLocationWizard">
+		<list key="ConfigurationWizardMainPage.STORE_URL_ID">
+			<item value="http://svn.apache.org/repos/asf/lucene/dev/"/>
+			<item value="http://svn.apache.org/viewvc/lucene/dev/"/>
+			<item value="http://svn.apache.org/viewvc/lucene/dev"/>
+			<item value=" http://svn.apache.org/viewcvs.cgi/lucene/dev"/>
+			<item value=" http://svn.apache.org/viewcvs.cgi/lucene/dev/"/>
+		</list>
+	</section>
+</section>
