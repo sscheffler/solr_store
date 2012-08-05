@@ -1,8 +1,7 @@
-#Fri Aug 03 20:30:03 CEST 2012
+EXIT_PROMPT_ON_CLOSE_LAST_WINDOW=false
+PROBLEMS_FILTERS_MIGRATE=true
 SWITCH_PERSPECTIVE_ON_PROJECT_CREATION=always
 eclipse.preferences.version=1
-tipsAndTricks=true
-platformState=1322421339861
-EXIT_PROMPT_ON_CLOSE_LAST_WINDOW=false
+platformState=1343580447056
 quickStart=false
-PROBLEMS_FILTERS_MIGRATE=true
+tipsAndTricks=true
