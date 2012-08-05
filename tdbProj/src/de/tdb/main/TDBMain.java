@@ -5,6 +5,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.tdb.TDBFactory;
+import com.hp.hpl.jena.tdb.base.file.Location;
 
 public class TDBMain {
 
@@ -12,7 +13,9 @@ public class TDBMain {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Dataset set = TDBFactory.createDataset("/home/stefan/stores/ts/");
+		
+		
+		Dataset set = TDBFactory.createDataset(Location.mem("/home/stefan/stores/ts/"));
 		
 		Model m = set.getDefaultModel();
 		Resource r1 = m.createResource("http://de.test/a");

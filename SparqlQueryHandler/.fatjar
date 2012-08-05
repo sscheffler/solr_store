@@ -1,10 +1,10 @@
 #Fat Jar Configuration File
-#Thu Aug 02 08:33:18 CEST 2012
+#Sun Aug 05 16:44:38 CEST 2012
 onejar.license.required=true
 manifest.classpath=
 manifest.removesigners=true
 onejar.checkbox=false
-jarname=/home/stefan/bin/solr/example/solr/lib/ex.jar
+jarname=/home/stefan/workspaces/solr_ws/bin/sparqlPlugin.jar
 manifest.mergeall=true
 manifest.mainclass=
 manifest.file=<createnew>

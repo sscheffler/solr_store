@@ -1,0 +1,134 @@
+package de.avgl.c3.solrWriter;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.Fieldable;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
+import org.apache.solr.common.params.CommonParams;
+import org.apache.solr.common.params.SolrParams;
+import org.apache.solr.common.util.NamedList;
+import org.apache.solr.request.SolrQueryRequest;
+import org.apache.solr.response.QueryResponseWriter;
+import org.apache.solr.response.SolrQueryResponse;
+import org.apache.solr.response.TextResponseWriter;
+import org.apache.solr.search.DocIterator;
+import org.apache.solr.search.DocList;
+import org.apache.solr.search.DocSlice;
+import org.apache.solr.search.SolrIndexReader;
+
+import com.hp.hpl.jena.query.Query;
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
+import com.hp.hpl.jena.query.QueryFactory;
+import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.query.ResultSetFormatter;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.tdb.TDBFactory;
+
+public class ResponseWriter implements QueryResponseWriter {
+	
+	private String tsPath = "";
+	private Model model;
+	private String sparqlQuery = "Select ?tsId ?tsPred ?tsObject where {?tsId ?tsPred ?tsObject}";
+	
+	@Override
+	public void init(NamedList list) {
+		tsPath = (String)list.get("storePath");
+		model = TDBFactory.createDataset(tsPath).getDefaultModel();
+	}
+
+	/**
+	 * Output
+	 */
+	@Override
+	public void write(Writer writer, SolrQueryRequest request,
+			SolrQueryResponse response) throws IOException {
+		
+		SolrParams params = request.getParams();	
+			
+		NamedList lst = response.getValues();
+	    Boolean omitHeader = request.getParams().getBool(CommonParams.OMIT_HEADER);
+	    if(omitHeader != null && omitHeader) lst.remove("responseHeader");
+	    int sz = lst.size();
+	    int start=0;
+	    
+	    SolrIndexReader reader = request.getSearcher().getReader();
+	    
+	    for (int i=start; i<sz; i++) {
+	    	
+	    	if(lst.getVal(i) instanceof DocSlice){
+	    		DocSlice slice = (DocSlice)lst.getVal(i);
+	    		
+	    		SolrDocumentList rl = new SolrDocumentList();
+	    		for (DocIterator it = slice.iterator(); it.hasNext(); ){
+	    			Document doc = reader.document(it.nextDoc());
+	    			
+	    			for(Fieldable f : doc.getFields()){
+	    				if(f instanceof Field){
+	    					Field field = (Field)f;
+	    					if(field.isStored())
+	    						writer.write(field.stringValue());
+	    				}
+	    			}
+	    			
+	    			
+	    	    	String tsId=doc.get("tsId");
+	    	    	if(tsId == null){
+	    	    		writer.write("Field 'tsId' is NULL");
+	    	    		return;
+	    	    	}
+	    	    	System.out.println(tsId);
+	    	    	String sparqlTempQuery = params.get("sparql");
+	    	    	
+	    	    	if(sparqlTempQuery != null){
+	    	    		sparqlQuery = sparqlTempQuery.replaceAll("\\?tsId", tsId);
+	    	    	}
+	    	    	else{
+	    	    		sparqlQuery = sparqlQuery.replaceAll("\\?tsId", tsId);
+	    	    	}
+	    	    	
+	    	    	Query query = QueryFactory.create(sparqlQuery) ;
+	    	    	QueryExecution qexec = QueryExecutionFactory.create(query, model) ;
+	    	    	try{
+	    	    		ResultSet results = qexec.execSelect();
+	    	    		
+	    	    		
+	    	    		ByteArrayOutputStream out = new ByteArrayOutputStream();
+	    			    
+	    			    ResultSetFormatter.outputAsJSON(out, results);
+	    			    writer.write(out.toString());
+	    	    		  
+	    	    	  }finally{qexec.close();}
+	    	    	  
+	    	    	  
+	    	      }
+	    		
+	    		
+	    		
+	    		
+	    	}
+	      }
+		
+		
+
+	}
+
+	@Override
+	public String getContentType(SolrQueryRequest request,
+			SolrQueryResponse response) {
+		return CONTENT_TYPE_TEXT_UTF8;
+	}
+
+
+
+}
+
+

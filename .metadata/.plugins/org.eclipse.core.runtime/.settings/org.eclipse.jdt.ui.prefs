@@ -1,22 +1,21 @@
-#Fri Aug 03 21:26:56 CEST 2012
-content_assist_proposals_foreground=0,0,0
-spelling_locale_initialized=true
 content_assist_disabled_computers=org.eclipse.jdt.ui.javaAllProposalCategory\u0000org.eclipse.jdt.ui.javaNoTypeProposalCategory\u0000org.eclipse.jdt.ui.textProposalCategory\u0000org.eclipse.jdt.ui.javaTypeProposalCategory\u0000
-org.eclipse.jdt.ui.text.templates_migrated=true
-useAnnotationsPrefPage=true
-eclipse.preferences.version=1
-org.eclipse.jface.textfont=1|Monaco|11.0|0|COCOA|1|;
-tabWidthPropagated=true
-org.eclipse.jdt.ui.editor.tab.width=
-fontPropagated=true
-org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
-org.eclipse.jdt.ui.javadoclocations.migrated=true
-proposalOrderMigrated=true
-content_assist_proposals_background=255,255,255
-org.eclipse.jdt.ui.formatterprofiles.version=12
-org.eclipse.jdt.internal.ui.navigator.layout=2
-content_assist_number_of_computers=23
-useQuickDiffPrefPage=true
-org.eclipse.jdt.ui.text.custom_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
 content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="org.apache.lucene.queryParser.QueryParser"><rhs name\="org.apache.solr.search.SolrQueryParser"/></lhs><lhs name\="org.apache.lucene.queryParser.QueryParserConstants"><rhs name\="org.apache.solr.search.SolrQueryParser"/></lhs><lhs name\="org.apache.solr.search.SolrQueryParser"><rhs name\="org.apache.solr.search.SolrQueryParser"/></lhs><lhs name\="com.hp.hpl.jena.sparql.resultset.ResultSetProcessor"><rhs name\="com.hp.hpl.jena.sparql.resultset.JSONOutputResultSet"/></lhs><lhs name\="com.hp.hpl.jena.sparql.resultset.JSONOutputResultSet"><rhs name\="com.hp.hpl.jena.sparql.resultset.JSONOutputResultSet"/></lhs><lhs name\="java.util.Set"><rhs name\="java.util.HashSet"/></lhs><lhs name\="java.lang.Cloneable"><rhs name\="java.util.HashSet"/></lhs><lhs name\="java.util.Collection"><rhs name\="java.util.HashSet"/></lhs><lhs name\="java.lang.Iterable"><rhs name\="java.util.HashSet"/></lhs><lhs name\="java.util.AbstractSet"><rhs name\="java.util.HashSet"/></lhs><lhs name\="java.util.AbstractCollection"><rhs name\="java.util.HashSet"/></lhs><lhs name\="java.util.HashSet"><rhs name\="java.util.HashSet"/></lhs><lhs name\="org.apache.solr.search.DocList"><rhs name\="org.apache.solr.search.DocSlice"/></lhs><lhs name\="org.apache.solr.search.DocSet"><rhs name\="org.apache.solr.search.DocSlice"/></lhs><lhs name\="org.apache.solr.search.DocSetBase"><rhs name\="org.apache.solr.search.DocSlice"/></lhs><lhs name\="org.apache.solr.search.DocSlice"><rhs name\="org.apache.solr.search.DocSlice"/></lhs><lhs name\="org.apache.lucene.document.Fieldable"><rhs name\="org.apache.lucene.document.Field"/></lhs></history>
+content_assist_number_of_computers=21
+content_assist_proposals_background=255,255,255
+content_assist_proposals_foreground=0,0,0
+eclipse.preferences.version=1
+fontPropagated=true
+org.eclipse.jdt.internal.ui.navigator.layout=2
+org.eclipse.jdt.ui.editor.tab.width=
+org.eclipse.jdt.ui.formatterprofiles.version=12
+org.eclipse.jdt.ui.javadoclocations.migrated=true
 org.eclipse.jdt.ui.text.code_templates_migrated=true
+org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+org.eclipse.jdt.ui.text.custom_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+org.eclipse.jdt.ui.text.templates_migrated=true
+org.eclipse.jface.textfont=1|Monospace|10.0|0|GTK|1|;
+proposalOrderMigrated=true
+spelling_locale_initialized=true
+tabWidthPropagated=true
+useAnnotationsPrefPage=true
+useQuickDiffPrefPage=true

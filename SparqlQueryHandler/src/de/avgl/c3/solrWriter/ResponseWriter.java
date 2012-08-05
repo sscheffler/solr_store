@@ -1,5 +1,6 @@
 package de.avgl.c3.solrWriter;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Iterator;
@@ -22,6 +23,7 @@ import org.apache.solr.search.DocIterator;
 import org.apache.solr.search.DocList;
 import org.apache.solr.search.DocSlice;
 import org.apache.solr.search.SolrIndexReader;
+import org.openjena.atlas.json.JsonObject;
 
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
@@ -31,16 +33,21 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.query.ResultSetFormatter;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.tdb.TDBFactory;
+import com.hp.hpl.jena.tdb.base.file.Location;
+import com.hp.hpl.jena.tdb.mgt.TDBSystemInfo;
 
 public class ResponseWriter implements QueryResponseWriter {
 	
-	private String tsPath = "/home/stefan/stores/ts/";
+	private String tsPath = "";
 	private Model model;
-	private String sparqlQuery = "Select ?tsId ?tsPred ?tsObject where {?tsId ?tsPred ?tsObject}";
+	
+	
 	
 	@Override
-	public void init(NamedList args) {
+	public void init(NamedList list) {
+		tsPath = (String)list.get("storePath");
 		model = TDBFactory.createDataset(tsPath).getDefaultModel();
+//		model = TDBFactory.createDataset(Location.mem(tsPath)).getDefaultModel();
 	}
 
 	/**
@@ -65,45 +72,70 @@ public class ResponseWriter implements QueryResponseWriter {
 	    	if(lst.getVal(i) instanceof DocSlice){
 	    		DocSlice slice = (DocSlice)lst.getVal(i);
 	    		
-	    		SolrDocumentList rl = new SolrDocumentList();
 	    		for (DocIterator it = slice.iterator(); it.hasNext(); ){
 	    			Document doc = reader.document(it.nextDoc());
 	    			
-	    			for(Fieldable f : doc.getFields()){
-	    				if(f instanceof Field){
-	    					Field field = (Field)f;
-	    					if(field.isStored())
-	    						writer.write(field.stringValue());
-	    				}
-	    			}
-	    			
-	    			
-	    	    	String tsId=doc.get("tsId");
+	    			//break if the field tsId is not existent / set
+	    			String tsId=doc.get("tsId");
 	    	    	if(tsId == null){
 	    	    		writer.write("Field 'tsId' is NULL");
 	    	    		return;
 	    	    	}
-	    	    	System.out.println(tsId);
-	    	    	String sparqlQuery = params.get("sparql");
 	    	    	
-	    	    	if(sparqlQuery != null){
+	    	    	String solrResults="{\n\t\"stored\": [\n{";
+	    	    	
+	    	    	//Write all stored fields from the Solr Response to the Output
+	    	    	Iterator<Fieldable> fieldIt = doc.getFields().iterator();
+	    	    	while(fieldIt.hasNext()){
+	    	    		Fieldable f = fieldIt.next();
+	    	    		if(f instanceof Field){
+	    					Field field = (Field)f;
+	    					if(field.isStored()){
+	    						
+	    						solrResults = solrResults +
+	    										"\""+
+	    										field.name()+
+	    										"\": " +
+	    										"\"" +field.stringValue()+ 
+	    										"\"" ;
+	    						
+	    						if(fieldIt.hasNext()){
+	    							solrResults = solrResults+",";
+	    						}
+	    					
+	    						solrResults = solrResults+"\n";
+	    					}
+	    				}
+	    	    	}
+
+	    			solrResults = solrResults +"}],";
+	    			
+//	    			If "sparql"-param is not set, the standard will be chosen
+	    			String sparqlQuery = "Select ?tsPred ?tsObject where {?tsId ?tsPred ?tsObject}";
+	    	    	String sparqlTempQuery = params.get("sparql");
+	    	    	if(sparqlTempQuery != null){
+	    	    		sparqlQuery = sparqlTempQuery.replaceAll("\\?tsId", tsId);
+	    	    	}
+	    	    	else{
 	    	    		sparqlQuery = sparqlQuery.replaceAll("\\?tsId", tsId);
 	    	    	}
 	    	    	
-	    	    	
-	    	    	 
-	    	    	System.out.println(sparqlQuery);
-	    	    	
+//	    	    	Query the Triplestore
 	    	    	Query query = QueryFactory.create(sparqlQuery) ;
 	    	    	QueryExecution qexec = QueryExecutionFactory.create(query, model) ;
+	    	    	String sparqlJsonResult="";
 	    	    	try{
-	    	    		ResultSet results = qexec.execSelect() ;
+	    	    		ResultSet results = qexec.execSelect();
+	    	    		ByteArrayOutputStream out = new ByteArrayOutputStream();
 	    			    
-	    			    ResultSetFormatter.outputAsJSON(System.out, results);
+	    			    ResultSetFormatter.outputAsJSON(out, results);
+	    			    sparqlJsonResult = out.toString();
 	    	    		  
-	    	    	  }finally{qexec.close();}
-	    	    	  
-	    	    	  
+	    	    	}finally{qexec.close();}
+	    	    	sparqlJsonResult = sparqlJsonResult.replaceFirst("\\{", "");
+	    	    		    	    	
+//	    	    	Concat solr and sparql results
+	    	    	writer.write(solrResults + sparqlJsonResult); 
 	    	      }
 	    		
 	    		

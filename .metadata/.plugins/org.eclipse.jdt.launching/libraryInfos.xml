@@ -21,7 +21,7 @@
 <entry path="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/endorsed"/>
 </endorsedDirs>
 </libraryInfo>
-<libraryInfo home="/usr/lib/jvm/java-6-openjdk/jre" version="1.6.0_23">
+<libraryInfo home="/usr/lib/jvm/java-6-openjdk/jre" version="1.6.0_24">
 <bootpath>
 <entry path="/usr/lib/jvm/java-6-openjdk/jre/lib/resources.jar"/>
 <entry path="/usr/lib/jvm/java-6-openjdk/jre/lib/rt.jar"/>
