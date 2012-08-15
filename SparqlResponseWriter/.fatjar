@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Thu Aug 09 10:54:11 CEST 2012
+onejar.license.required=true
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=/home/sscheffler/workspaces/c3Environment/CDREI-nutch/solr/multicore/core3/lib/sparqlPlugin.jar
+manifest.mergeall=true
+manifest.mainclass=
+manifest.file=<createnew>
+jarname.isextern=true
+onejar.expand=
+excludes=
+includes=

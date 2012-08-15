@@ -12106,3 +12106,37 @@ Binding(ALT+CTRL+R,
 
 !ENTRY org.eclipse.emf.ecore 2 0 2012-08-15 14:59:34.737
 !MESSAGE Both 'org.eclipse.m2e.model.edit' and 'org.maven.ide.eclipse.maven_model_edit' register an extension parser for 'pom'
+!SESSION 2012-08-15 15:15:35.677 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.6.0_31
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=de_DE
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os linux -ws gtk -arch x86 -product org.eclipse.epp.package.jee.product
+
+!ENTRY org.eclipse.emf.ecore 2 0 2012-08-15 15:15:41.840
+!MESSAGE Both 'org.eclipse.m2e.model.edit' and 'org.maven.ide.eclipse.maven_model_edit' register a package for 'http://maven.apache.org/POM/4.0.0'
+
+!ENTRY org.eclipse.emf.ecore 2 0 2012-08-15 15:15:41.846
+!MESSAGE Both 'org.eclipse.m2e.model.edit' and 'org.maven.ide.eclipse.maven_model_edit' register an extension parser for 'pom'
+
+!ENTRY org.eclipse.jface 2 0 2012-08-15 15:15:43.959
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-08-15 15:15:43.959
+!MESSAGE A conflict occurred for ALT+CTRL+R:
+Binding(ALT+CTRL+R,
+	ParameterizedCommand(Command(org.python.pydev.debug.setnext,Set Next Statement,
+		,
+		Category(org.python.pydev.ui.category.run,PyDev - Run,Python run category,true),
+		ActionDelegateHandlerProxy(null,org.python.pydev.debug.ui.actions.RetargetSetNextAction),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(ALT+CTRL+R,
+	ParameterizedCommand(Command(org.eclipse.team.svn.ui.command.CompareWithRevisionCommand,URL...,
+		,
+		Category(org.eclipse.team.svn.ui.command.category,SVN,null,true),
+		,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
