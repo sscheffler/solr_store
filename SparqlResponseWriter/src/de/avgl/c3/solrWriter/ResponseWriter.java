@@ -34,6 +34,8 @@ public class ResponseWriter implements QueryResponseWriter {
 	
 	private String tsPath = "";
 	private Model model;
+	private String tsId="";
+	
 	
 	private static final String FACETS_ID= "facets";
 	private static final String HIGHLIGHTING_ID= "highlighting";
@@ -52,6 +54,23 @@ public class ResponseWriter implements QueryResponseWriter {
 		finalJsonMap.put(RESULTS_ID, new ArrayList<Object>());
 	}
 	
+	private static Map<String, Integer> queryIdentifyMap;
+	static{
+		queryIdentifyMap = new HashMap<String, Integer>();
+		queryIdentifyMap.put("getAllContacts", 1);
+		queryIdentifyMap.put("getFuzzyContacts", 2);
+		queryIdentifyMap.put("getIdentifiedContacts", 3);
+		queryIdentifyMap.put("special1", 4);
+	}
+	
+	/*private static Map<Integer, String> queryStringMap;
+	static{
+		queryStringMap = new HashMap<Integer, String>();
+		queryStringMap.put(1,"");
+		queryStringMap.put(2,"");
+		queryStringMap.put(3,"");
+		queryStringMap.put(4,"");
+	}*/
 	
 	
 	@Override
@@ -59,6 +78,59 @@ public class ResponseWriter implements QueryResponseWriter {
 		tsPath = (String)list.get("storePath");
 		model = TDBFactory.createDataset(tsPath).getDefaultModel();
 	}
+	
+	/**
+	 * calls the Method for a preset query
+	 * @param i
+	 * @param query
+	 */
+	private void call(Integer i/*, String query*/){
+		switch (i){
+		case 1:{getAllContacts();break;}
+		case 2:{getFuzzyContacts();break;}
+		case 3:{getIdentifiedContacts();break;}
+		case 4:{getSpecial1();break;}
+		}
+	}
+	
+	private void getAllContacts(){
+		System.out.println("all");
+	}
+	
+	private void getFuzzyContacts(){
+		System.out.println("fuzzy");
+	}
+	
+	private void getIdentifiedContacts(){
+		System.out.println("ident");
+	}
+	
+	private void getSpecial1(){
+		String q = "PREFIX : <http://avantgarde-labs.de/c3/ontology.owl#>"+
+				"PREFIX r: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"+
+				"PREFIX i: <http://avantgarde-labs.de/c3/resource#>"+
+				"Select ?p ?o {{?tsId :hasAddress ?a}{?a ?p ?o} UNION {?tsId ?p ?o} FILTER (?tsId IN (%s) && ?p != :hasAddress && ?p != r:type)}";
+		
+		
+		String query = this.getQuery(this.getTsId(), q);
+		System.out.println("special1");
+		execQuery(query);
+		
+	}
+	
+	
+	private void execQuery(String queryString){
+		QueryExecution qexec = QueryExecutionFactory.create(queryString, model) ;
+    	try{
+    		ResultSet results = qexec.execSelect();
+//    		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		    
+		    ResultSetFormatter.outputAsJSON(System.out, results);
+		    
+    		  
+    	}finally{qexec.close();}
+	}
+	
 
 	/**
 	 * Output
@@ -92,8 +164,9 @@ public class ResponseWriter implements QueryResponseWriter {
 	    			Document doc = reader.document(it.nextDoc());
 	    			
 	    			//break if the field tsId is not existent / set
-	    			String tsId=doc.get("tsId");
-	    	    	if(tsId == null){
+	    			this.setTsId(doc.get("tsId"));
+//	    			String tsId=doc.get("tsId");
+	    	    	if(this.getTsId().equals("")){
 	    	    		writer.write("Field 'tsId' is NULL");
 	    	    		return;
 	    	    	}
@@ -116,9 +189,18 @@ public class ResponseWriter implements QueryResponseWriter {
 	    	    	}	    	    
 	    	    
 //	    	    	Query the Triplestore
-	    	    	String query=getQuery(tsId, params.get("sparql"));
-	    	    	System.out.println(query);
-	    	    	QueryExecution qexec = QueryExecutionFactory.create(query, model) ;
+	    	    	String query=getQuery(this.getTsId(), params.get("sparql"));
+	    	    	
+	    	    	// Preset Query?
+	    	    	if(queryIdentifyMap.containsKey(query)){
+	    	    		Integer identify = queryIdentifyMap.get(query);
+	    	    		call(identify/*, queryStringMap.get(identify)*/);
+	    	    	}
+	    	    	
+	    	    	
+	    	    	
+	    	    	
+	    	  /*  	QueryExecution qexec = QueryExecutionFactory.create(query, model) ;
 	    	    	try{
 	    	    		ResultSet results = qexec.execSelect();
 	    	    		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -127,7 +209,8 @@ public class ResponseWriter implements QueryResponseWriter {
 	    			    resMap.put(SPARQL_ID,out.toString());
 	    	    		  
 	    	    	}finally{qexec.close();}
-	    	    	((List<Object>)finalJsonMap.get(RESULTS_ID)).add(resMap);
+	    	    	((List<Object>)finalJsonMap.get(RESULTS_ID)).add(resMap);*/
+	    	    	this.setTsId("");
 	    		}
 	    	}
 	    	
@@ -170,6 +253,14 @@ public class ResponseWriter implements QueryResponseWriter {
 		w.write(map);
 		
 		return buffer.toString();
+	}
+
+	public String getTsId() {
+		return tsId;
+	}
+
+	public void setTsId(String tsId) {
+		this.tsId = tsId;
 	}
 
 }
